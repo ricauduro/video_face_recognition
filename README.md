@@ -20,4 +20,4 @@ Using Azure cognitive services and Python, do face recogition / detection in rea
   
   ![image](https://user-images.githubusercontent.com/58055908/210121144-79fed0e5-252c-4653-b635-884fd0fc1271.png)
   
-  With this response we can see that our script to detect faces in live videos is working. Now we can use the coordinates of the response, with OpenCV, to draw the rectangle in our video.
+  With this response we can see that our script to detect faces in live videos is working. Now we can use these coordinates, with OpenCV, to draw the rectangle in our video.
