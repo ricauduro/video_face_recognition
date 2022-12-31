@@ -17,7 +17,8 @@ Using Azure cognitive services and Python, make face recogition / detection in r
 
 ![image](https://user-images.githubusercontent.com/58055908/210120885-8058e9d7-6ef1-417b-8977-818ba16f86b5.png)
 
-  This request was built based on the documentation mentioned earlier. I´m using detection model 01 because it returns main face attributes (head pose, age, emotion, and so on) and also returns the face landmarks that I choose.
+  This request was built based on the documentation mentioned earlier. I´m using detection model 01 because it returns main face attributes (head pose, age, emotion, and so on) and also returns the face landmarks that I choose. In this case, I´m only retrievig age, gender and emotion, but there are a lot of options in the documentation that you can choose.
+  
   The response should look like this 
   
   ![image](https://user-images.githubusercontent.com/58055908/210121144-79fed0e5-252c-4653-b635-884fd0fc1271.png)
