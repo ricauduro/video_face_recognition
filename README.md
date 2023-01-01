@@ -21,6 +21,15 @@ The KEY variable you can find in your Azure subscription, inside the face API
 
 ![image](https://user-images.githubusercontent.com/58055908/210178831-edfafa89-d46c-4953-81d8-5c83fb2e631e.png)
 
+  I don´t like to let my key exposed, so create a JSON file with the value 
+  
+  ![image](https://user-images.githubusercontent.com/58055908/210180123-bb752be0-64b0-455e-82a2-8528e7fd0ad9.png)
+
+  and then I´m using json.load to get the value
+  
+  ![image](https://user-images.githubusercontent.com/58055908/210180066-562dd97a-04b6-40d0-afbb-c02607e1206f.png)
+
+
   This request was built based on the documentation mentioned earlier. I´m using detection model 01 because it returns main face attributes (head pose, age, emotion, and so on) and also returns the face landmarks that I choose. In this case, I´m only retrieving age, gender and emotion, but there are a lot of options in the documentation that you can choose.
   
   The response should look like this 
