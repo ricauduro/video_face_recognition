@@ -1,6 +1,6 @@
 {
-    "KEY" : "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "KEY" : "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 
-   "ENDPOINT" : "https://xxxxxxxxxxxxxxxxx.cognitiveservices.azure.com/"
+   "ENDPOINT" : "https://xxxxxxxxxxxxxxxx.cognitiveservices.azure.com/"
 
 }
