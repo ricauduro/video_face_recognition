@@ -5,7 +5,7 @@ Using Azure cognitive services and Python, make face recogition / detection in r
   
   Before begining, make sure you already provisioned the face API inside your Azure account.
 
-  Most part of the logic I got from the quick start of the MS Face Recognition service <https://learn.microsoft.com/en-us/azure/cognitive-services/computer-vision/quickstarts-sdk/identity-client-library?tabs=visual-studio&pivots=programming-language-python> and for Face Detection <https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236>. This second link is not detailed as the first one, but we´re going to do a POST request of the image, GET the landmarks and then draw in the screen with OpenCV.
+  Most part of the logic I got from the quick start of the MS Face Recognition service <https://learn.microsoft.com/en-us/azure/cognitive-services/computer-vision/quickstarts-sdk/identity-client-library?tabs=visual-studio&pivots=programming-language-python> and for Face Detection <https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236>. This second link is not detailed as the first one, but basically we´re going to do a POST request of the image, GET the landmarks and then draw in the screen with OpenCV.
 
   Let´s start with the face detection. To detect faces in real time videos, we´re going to use OpenCV (pip install opencv-python) to access our Webcam with the code
 
@@ -17,10 +17,30 @@ Using Azure cognitive services and Python, make face recogition / detection in r
 
 ![image](https://user-images.githubusercontent.com/58055908/210120885-8058e9d7-6ef1-417b-8977-818ba16f86b5.png)
 
-  This request was built based on the documentation mentioned earlier. I´m using detection model 01 because it returns main face attributes (head pose, age, emotion, and so on) and also returns the face landmarks that I choose. In this case, I´m only retrievig age, gender and emotion, but there are a lot of options in the documentation that you can choose.
+The KEY variable you can find in your Azure subscription, inside the face API
+
+![image](https://user-images.githubusercontent.com/58055908/210178831-edfafa89-d46c-4953-81d8-5c83fb2e631e.png)
+
+  This request was built based on the documentation mentioned earlier. I´m using detection model 01 because it returns main face attributes (head pose, age, emotion, and so on) and also returns the face landmarks that I choose. In this case, I´m only retrieving age, gender and emotion, but there are a lot of options in the documentation that you can choose.
   
   The response should look like this 
   
   ![image](https://user-images.githubusercontent.com/58055908/210121144-79fed0e5-252c-4653-b635-884fd0fc1271.png)
   
-  With this response we can see that our script to detect faces in live videos is working. Now we can use these coordinates, with OpenCV, to draw the rectangle in our video.
+  With this response we can see that our script to detect faces in live videos is working. 
+  
+  Now we can use these coordinates, with OpenCV, to draw the rectangle in our video.
+  
+  First, we´re going to comment the cv.imshow, once we want to see the video with the rectangle, not the original one. Then we can create a loop for faces variable, once we can have more than 1 face per video, and then start to set variables with the coordinates we´re receiving in the response. After we´re using cv2.rectangle method to draw the rectangle and then cv2.imshow to display the results. 
+  
+  ![image](https://user-images.githubusercontent.com/58055908/210179274-9a11acb0-d711-4e37-9efb-c97ec3417849.png)
+  
+The result is somthing similar to this
+
+![image](https://user-images.githubusercontent.com/58055908/210179678-e1292eb7-5f37-46a1-888a-ff17caf45f35.png)
+
+I´m using a new library (time) to create a delay between the requests. As I said before, we can call the API for free, but there is a limit, as we can see below
+
+![image](https://user-images.githubusercontent.com/58055908/210179862-d440102d-26c4-45aa-b70e-912f914e1957.png)
+
+
