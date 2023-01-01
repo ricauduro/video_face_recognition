@@ -52,4 +52,5 @@ I´m using a new library (time) to create a delay between the requests. As I sai
 
 ![image](https://user-images.githubusercontent.com/58055908/210179862-d440102d-26c4-45aa-b70e-912f914e1957.png)
 
+Until here I created the file face_detection.py .
 
