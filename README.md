@@ -44,7 +44,7 @@ The KEY variable you can find in your Azure subscription, inside the face API
   
   ![image](https://user-images.githubusercontent.com/58055908/210179274-9a11acb0-d711-4e37-9efb-c97ec3417849.png)
   
-The result is somthing similar to this
+The result is something similar to this
 
 ![image](https://user-images.githubusercontent.com/58055908/210179678-e1292eb7-5f37-46a1-888a-ff17caf45f35.png)
 
