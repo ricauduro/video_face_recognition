@@ -38,7 +38,7 @@ while True:
 
     draw = cv2.rectangle(frame,(left, top), (right, bottom),(0, 255, 0), 3)
     cv2.imshow('face_rect', draw)
-    time.sleep(2)
+    time.sleep(3)
 
 cam.release()
 cv2.destroyAllWindows()
