@@ -65,4 +65,7 @@ Here the code with the age
 
 ![image](https://user-images.githubusercontent.com/58055908/211224412-603b2b82-a907-4944-9e65-9422b9da40df.png)
 
+Until here you can find the code in the face_detection.py .
+
+Now I´m going to explain about face recognition, and I´ll create a new file for it.
 
