@@ -36,7 +36,13 @@ while True:
         right = int(rect['width']) + int(rect['left'])
         bottom = int(rect['height']) + int(rect['top'])
 
-    draw = cv2.rectangle(frame,(left, top), (right, bottom),(0, 255, 0), 3)
+        draw = cv2.rectangle(frame,(left, top), (right, bottom),(0, 255, 0), 3)
+
+        att = face['faceAttributes']
+        age = att['age']
+
+        draw = cv2.putText(draw, 'Age: ' + str(age), (left, bottom + 20), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
+        
     cv2.imshow('face_rect', draw)
     time.sleep(3)
 
