@@ -48,7 +48,7 @@ The result is something similar to this
 
 ![image](https://user-images.githubusercontent.com/58055908/210179678-e1292eb7-5f37-46a1-888a-ff17caf45f35.png)
 
-I´m using a new library (time) to create a delay between the requests. As I said before, we can call the API for free, but there is a limit, as we can see below
+I´m also using a library (time) to create a delay between the requests. As I said before, we can call the API for free, but there is a limit, as we can see below
 
 ![image](https://user-images.githubusercontent.com/58055908/210179862-d440102d-26c4-45aa-b70e-912f914e1957.png)
 
