@@ -42,7 +42,7 @@ The KEY variable you can find in your Azure subscription, inside the face API
   
   First, we´re going to comment the cv.imshow, once we want to see the video with the rectangle, not the original one. Then we can create a loop for faces variable, once we can have more than 1 face per video, and then start to set variables with the coordinates we´re receiving in the response. After we´re using cv2.rectangle method to draw the rectangle and then cv2.imshow to display the results. 
   
-  ![image](https://user-images.githubusercontent.com/58055908/210179274-9a11acb0-d711-4e37-9efb-c97ec3417849.png)
+![image](https://user-images.githubusercontent.com/58055908/211223914-05528f1b-82b9-4e18-9e0c-cc21238e92d2.png)
   
 The result is something similar to this
 
@@ -52,5 +52,17 @@ I´m also using a library (time) to create a delay between the requests. As I sa
 
 ![image](https://user-images.githubusercontent.com/58055908/210179862-d440102d-26c4-45aa-b70e-912f914e1957.png)
 
-Until here I created the file face_detection.py . I´ll continue with face recognition.
+We can also draw the other attributes of our response, let´s get the age. Now we´re using the putText function from CV2 to insert a text in our image, you can find more about cv2.putText here (https://docs.opencv.org/4.x/d6/d6e/group__imgproc__draw.html#ga5126f47f883d730f633d74f07456c576) 
+
+![image](https://user-images.githubusercontent.com/58055908/211224132-5e2c807f-0102-4459-9fe9-3c177d8f26bb.png)
+
+
+This is  the result
+
+![image](https://user-images.githubusercontent.com/58055908/211224038-852038b3-8270-40a3-bd6a-4536a19d3606.png)
+
+Here the code with the age
+
+![image](https://user-images.githubusercontent.com/58055908/211224412-603b2b82-a907-4944-9e65-9422b9da40df.png)
+
 
