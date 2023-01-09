@@ -109,3 +109,4 @@ Now focusing on the recognition part
 
 ![image](https://user-images.githubusercontent.com/58055908/211230710-eb22e54d-e3c5-473a-9eaf-f947987f254e.png)
 
+I´m not sure if someone is already reading this, but I´ll finsih this explanation and a video showing all the the steps soon
