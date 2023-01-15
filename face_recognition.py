@@ -31,12 +31,12 @@ def criar_pessoa(pessoa):
     ID.append(globals()[pessoa].person_id)
 
     listaFotos = [file for file in glob.glob('*.jpg') if file.startswith(pessoa)]
-    time.sleep (1)
+    time.sleep(1)
     for image in listaFotos:
         face_client.person_group_person.add_face_from_stream(
             GRUPOS[0], globals()[pessoa].person_id, open(image, 'r+b'))
         print(f'Incluida foto {image}')
-        time.sleep (1)
+        time.sleep(1)
 
 
 def treinar(grupo):
