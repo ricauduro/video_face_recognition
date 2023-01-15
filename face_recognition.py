@@ -11,7 +11,7 @@ import sys
 
 cam = cv2.VideoCapture(0)
 
-path = ''
+path = 'c:\\Users\\ricardo.cauduro\\OneDrive - Kumulus\\Desktop\\Notebooks\\data\\key.json'
 
 credential = json.load(open(path))
 KEY = credential['KEY']
