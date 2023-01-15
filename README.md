@@ -114,5 +114,3 @@ Then, it loops through the face_ids list and calls the FaceClient's "identify" m
 Then it iterates over the faces and results, it takes the rectangle of the face, and it uses OpenCV to draw a rectangle around the face on the frame.
 It also gets the face attributes (age, gender, emotion) and if the person is identified it prints the name of the person on the frame and adds a key value pair to the face dictionary.
 It also shows the processed frame with the rectangle and the name of the person.
-
-I´m not sure if someone is already reading this, but I´ll finsih this explanation and a video showing all the the steps soon
