@@ -67,7 +67,7 @@ Here the code with the age
 
 Until here you can find the code in the face_detection.py .
 
-Now I´m going to explain about face recognition and I´ll create a new file for it, but using the code we´re developing.
+Now I´m going to explain about face recognition and I´ll create a new file for it (face_recognition.py), but using the code we´re developing.
 
 There are some specific points that we should pay attention:
   Install the cognitive services library (pip install --upgrade azure-cognitiveservices-vision-face)
@@ -108,5 +108,11 @@ Now sending the frame to the face api to make the recognition, this first part w
 Now focusing on the recognition part 
 
 ![image](https://user-images.githubusercontent.com/58055908/211230710-eb22e54d-e3c5-473a-9eaf-f947987f254e.png)
+
+This code is processing the results from the facial recognition performed by Azure Face API. It is creating an empty list called "face_ids" and then appends the "faceId" from each face that was detected in the frame to this list.
+Then, it loops through the face_ids list and calls the FaceClient's "identify" method for each id, passing in the face_ids list and the "GRUPOS" list as the arguments. The "identify" method identifies the person(s) in the image using the person group and face IDs that were provided.
+Then it iterates over the faces and results, it takes the rectangle of the face, and it uses OpenCV to draw a rectangle around the face on the frame.
+It also gets the face attributes (age, gender, emotion) and if the person is identified it prints the name of the person on the frame and adds a key value pair to the face dictionary.
+It also shows the processed frame with the rectangle and the name of the person.
 
 I´m not sure if someone is already reading this, but I´ll finsih this explanation and a video showing all the the steps soon
