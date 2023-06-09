@@ -27,6 +27,8 @@ GRUPOS = ['familia']
 PESSOAS = ['ricardo', 'rita']
 ID = []
 
+face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
+
 # Functions
 def criar_grupo(grupo):
     face_client.person_group.create(person_group_id=grupo, name=grupo)
