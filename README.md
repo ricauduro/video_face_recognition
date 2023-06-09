@@ -75,7 +75,8 @@ There are some specific points that we should pay attention:
   
  Starting with the imports, there´s a few more to do
 
-![image](https://user-images.githubusercontent.com/58055908/211226808-b4f6d1e9-21c6-4ee8-b971-b840ee8882e3.png)
+![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/451d6810-1da4-4974-889d-8668c8854774)
+
 
 Along with the Key, now we´ll also need the endpoint to create our faceClient
 
@@ -87,27 +88,29 @@ The ENDPOINT variable you can find in your Azure subscription, inside the face A
 
 After set some values for the person group and for the persons, we´ll set our first function, that´s going to create the person group and will send the photos of each person so we can train our model later
 
-![image](https://user-images.githubusercontent.com/58055908/211230080-6a24fe4d-0208-4aa5-b9db-51179032783a.png)
+![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/f1832469-5206-43a3-bcaa-f00045da9c52)
+
 
 And in the treinar function we´re going to train the face recognition model with the photos of each person that we already sent
 
 ![image](https://user-images.githubusercontent.com/58055908/211229397-c5e6ded7-181e-4fdc-9a27-a99d5a1faf21.png)
 
-Now starting to run our code
+Now starting to run our code. This functions is bigger than the other ones, so I´ll explain it in part.
 
-![image](https://user-images.githubusercontent.com/58055908/211230210-8c5080c3-c3d7-4ede-bac8-bc0c20def53c.png)
+![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/64b0a7a7-e5ae-42dc-8b86-f44561bd2e5e)
 
-This is the result of the functions
+Fisrt we´re calling the functions to create the group the persons and then train the model. This is the result of the functions
 
 ![image](https://user-images.githubusercontent.com/58055908/211230272-986d15e3-296f-439d-98df-16bd226b6914.png)
 
 Now sending the frame to the face api to make the recognition, this first part we already saw in the face detection
 
-![image](https://user-images.githubusercontent.com/58055908/211230572-e2b17f6d-1191-426b-91bc-90117a47c623.png)
+![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/8bd98a5f-0691-4d5e-83b4-c354bfabfbc2)
+
 
 Now focusing on the recognition part 
 
-![image](https://user-images.githubusercontent.com/58055908/211230710-eb22e54d-e3c5-473a-9eaf-f947987f254e.png)
+![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/344ed43c-a841-4e87-a5d0-e88c11c90c80)
 
 This code is processing the results from the facial recognition performed by Azure Face API. It is creating an empty list called "face_ids" and then appends the "faceId" from each face that was detected in the frame to this list.
 Then, it loops through the face_ids list and calls the FaceClient's "identify" method for each id, passing in the face_ids list and the "GRUPOS" list as the arguments. The "identify" method identifies the person(s) in the image using the person group and face IDs that were provided.
