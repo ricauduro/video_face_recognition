@@ -118,6 +118,7 @@ Then it iterates over the faces and results, it takes the rectangle of the face,
 It also gets the face attributes (age, gender, emotion) and if the person is identified it prints the name of the person on the frame and adds a key value pair to the face dictionary.
 It also shows the processed frame with the rectangle and the name of the person.
 
-Once I´m explain how to perform face recognition on live videos, I´ll record a video with the full code so you can see it in live action. Here´s the link.
+Once I´m explain how to perform face recognition on live videos, I´ll record a video with the full code so you can see it in live action. Here´s the link
+https://youtu.be/XxkPakdOr44
 
 
