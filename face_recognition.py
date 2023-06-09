@@ -8,23 +8,16 @@ from azure.cognitiveservices.vision.face import FaceClient
 from msrest.authentication import CognitiveServicesCredentials
 import glob
 import sys
-
 from datetime import datetime
 import os
-from azure.storage.blob import BlobServiceClient
 
 # Variables
 path = 'C:\\Users\\ricardo.cauduro\OneDrive - Kumulus\\Desktop\\Data\\NTB'
 source_file = f'{path}\\FaceVideoDetection\\output\\mydata-'
 
-token = os.getenv('AZURE_TOKEN') 
 credential = json.load(open(f'{path}\\key.json'))
 KEY = credential['KEY']
 ENDPOINT = credential['ENDPOINT']
-storage_account_key = credential["storage_account_key"]
-storage_account_name = credential["storage_account_name"]
-connection_string = credential["connection_string"]
-container_name = credential["container_name"]
 
 face_api_url = "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect"
 headers = {'Content-Type': 'application/octet-stream', 'Ocp-Apim-Subscription-Key': KEY}
@@ -64,13 +57,6 @@ def treinar(grupo):
             face_client.person_group.delete(person_group_id=grupo)
             sys.exit('Training the person group has failed.')
         time.sleep(5)
-
-def uploadToBlobStorage(file_path,file_name):
-   blob_service_client = BlobServiceClient.from_connection_string(connection_string)
-   blob_client = blob_service_client.get_blob_client(container=container_name, blob=file_name)
-   with open(file_path,'rb') as data:
-      blob_client.upload_blob(data)
-      print(f'Uploaded {file_name}.')
 
 def iniciar():
     cam = cv2.VideoCapture(0)
@@ -115,28 +101,6 @@ def iniciar():
                 else:
                     draw = cv2.putText(frame, 'Nome: ' + '', (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0,  255), 1, cv2.LINE_AA)
             cv2.imshow('face_rect', draw)
-
-            # Gerando o arquivo com as informações captadas pelo video
-            m = 0
-            for i in faces:
-                faces[m]['timeStamp'] = data_insert
-                faces[m]['bottomSize'] = str(bottom)
-                faces[m]['location'] = 'Casa'
-                m = m + 1
-                json_string = json.dumps(faces, separators=(',', ':'))
-
-            file = f'{source_file}{data_insert}.json'
-            json_file = os.path.join(f'{path}\\FaceVideoDetection\\output', f'mydata-{data_insert}.json')
-
-            if os.path.exists(json_file):
-                print('Json duplicado')
-            else:
-                print('Json unico')
-                with open(file, 'w') as f:
-                    json.dump(json.JSONDecoder().decode(json_string), f)
-
-                # Enviando o arquivo gerado para o Blob Storage
-                uploadToBlobStorage(file,f'face-reco-{data_insert}')
 
         k = cv2.waitKey(1) & 0xFF # bitwise AND operation to get the last 8 bits
         if k == 27:
