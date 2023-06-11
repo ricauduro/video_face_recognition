@@ -101,7 +101,7 @@ Now starting to run our code. First we´ll set the name of the person group and 
 
 This is the result of the functions
 
-![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/642c67e9-60f7-4b6e-befe-e6e0acb45f63)
+![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/b1f13ffa-28bb-4292-9a8a-870f362be91d)
 
 Now sending the frame to the face api to make the recognition, this first part we already saw in the face detection
 
