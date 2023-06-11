@@ -95,9 +95,9 @@ And in the treinar function we´re going to train the face recognition model wit
 
 ![image](https://user-images.githubusercontent.com/58055908/211229397-c5e6ded7-181e-4fdc-9a27-a99d5a1faf21.png)
 
-Now starting to run our code. This functions is bigger than the other ones, so I´ll explain it in part.
+Now starting to run our code. First we´ll set the name of the person group and os each person in this group using the input, then we´ll create the groups, the persons and train the model with the pictures saved on our local folder, and then we´ll start the camera.
 
-![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/64b0a7a7-e5ae-42dc-8b86-f44561bd2e5e)
+![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/f4701353-29c9-4e99-ba9c-4737fee2775d)
 
 Fisrt we´re calling the functions to create the group the persons and then train the model. This is the result of the functions
 
