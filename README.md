@@ -67,7 +67,7 @@ Here the code with the age
 
 Until here you can find the code in the face_detection.py .
 
-Now I´m going to explain about face recognition and I´ll create a new file for it (face_recognition.py), but using the code we´re developing.
+Now I´m going to explain about face recognition and I´ll create a new file for it (face_recognition.py).
 
 There are some specific points that we should pay attention:
   Install the cognitive services library (pip install --upgrade azure-cognitiveservices-vision-face)
