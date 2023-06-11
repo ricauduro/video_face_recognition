@@ -75,7 +75,7 @@ There are some specific points that we should pay attention:
   
  Starting with the imports, there´s a few more to do
 
-![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/451d6810-1da4-4974-889d-8668c8854774)
+![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/5c0681ee-1662-4f37-9ea4-0f0473da6b77)
 
 
 Along with the Key, now we´ll also need the endpoint to create our faceClient
