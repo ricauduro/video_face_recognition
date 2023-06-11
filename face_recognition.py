@@ -13,7 +13,6 @@ import os
 
 # Variables
 path = 'C:\\Users\\ricardo.cauduro\OneDrive - Kumulus\\Desktop\\Data\\NTB'
-source_file = f'{path}\\FaceVideoDetection\\output\\mydata-'
 
 credential = json.load(open(f'{path}\\key.json'))
 KEY = credential['KEY']
