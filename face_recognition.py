@@ -60,9 +60,6 @@ def treinar(grupo):
         time.sleep(5)
 
 def iniciar():
-
-    face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
-
     GRUPOS.append(input('Defina o nome do grupo -> ').lower())
     list(map(lambda x: criar_grupo(x), GRUPOS))
     
@@ -77,8 +74,6 @@ def iniciar():
     ultimo_nome = lista_pessoas.pop()
     nomes = ', '.join(lista_pessoas)
     print('{0} e {1} foram adicionados ao grupo {2}'.format(nomes, ultimo_nome, GRUPOS[0]))
-
-    print(PESSOAS)
 
     list(map(lambda x: criar_pessoa(x,'familia'), PESSOAS))
     list(map(lambda x: treinar(x), GRUPOS))
