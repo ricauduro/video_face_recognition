@@ -23,8 +23,8 @@ face_api_url = "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect"
 headers = {'Content-Type': 'application/octet-stream', 'Ocp-Apim-Subscription-Key': KEY}
 params = {'detectionModel': 'detection_01', 'returnFaceId': 'true', 'returnFaceRectangle': 'true', 'returnFaceAttributes': 'age, gender, emotion'}
 
-GRUPOS = ['familia']
-PESSOAS = ['ricardo', 'rita']
+GRUPOS = []
+PESSOAS = []
 ID = []
 
 face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
@@ -61,12 +61,30 @@ def treinar(grupo):
         time.sleep(5)
 
 def iniciar():
-    cam = cv2.VideoCapture(0)
+
     face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
 
+    GRUPOS.append(input('Defina o nome do grupo -> ').lower())
     list(map(lambda x: criar_grupo(x), GRUPOS))
+    
+    lista_pessoas = []
+    nome_pessoa = None
+    while nome_pessoa != 't':
+        nome_pessoa = input(f"Digite o nome da pessoa para associar ao grupo '{GRUPOS[0]}' ou digite 'fim' para terminar. -> ").lower()
+        if nome_pessoa != 't':
+            PESSOAS.append(nome_pessoa)
+            lista_pessoas.append(nome_pessoa)
+    
+    ultimo_nome = lista_pessoas.pop()
+    nomes = ', '.join(lista_pessoas)
+    print('{0} e {1} foram adicionados ao grupo {2}'.format(nomes, ultimo_nome, GRUPOS[0]))
+
+    print(PESSOAS)
+
     list(map(lambda x: criar_pessoa(x,'familia'), PESSOAS))
     list(map(lambda x: treinar(x), GRUPOS))
+
+    cam = cv2.VideoCapture(0)
 
     while True:
         data_insert = str(datetime.now().strftime("%Y%m%d_%H%M%S"))
