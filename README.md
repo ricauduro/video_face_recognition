@@ -99,9 +99,9 @@ Now starting to run our code. First we´ll set the name of the person group and 
 
 ![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/f4701353-29c9-4e99-ba9c-4737fee2775d)
 
-Fisrt we´re calling the functions to create the group the persons and then train the model. This is the result of the functions
+This is the result of the functions
 
-![image](https://user-images.githubusercontent.com/58055908/211230272-986d15e3-296f-439d-98df-16bd226b6914.png)
+![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/642c67e9-60f7-4b6e-befe-e6e0acb45f63)
 
 Now sending the frame to the face api to make the recognition, this first part we already saw in the face detection
 
