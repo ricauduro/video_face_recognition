@@ -3,13 +3,8 @@ import cv2
 import requests
 import time
 import json
-
 from azure.cognitiveservices.vision.face import FaceClient
 from msrest.authentication import CognitiveServicesCredentials
-import glob
-import sys
-from datetime import datetime
-import os
 
 # Variables
 path = 'C:\\Users\\ricardo.cauduro\OneDrive - Kumulus\\Desktop\\Data\\NTB'
