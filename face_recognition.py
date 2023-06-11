@@ -65,9 +65,9 @@ def iniciar():
     
     lista_pessoas = []
     nome_pessoa = None
-    while nome_pessoa != 't':
+    while nome_pessoa != 'fim':
         nome_pessoa = input(f"Digite o nome da pessoa para associar ao grupo '{GRUPOS[0]}' ou digite 'fim' para terminar. -> ").lower()
-        if nome_pessoa != 't':
+        if nome_pessoa != 'fim':
             PESSOAS.append(nome_pessoa)
             lista_pessoas.append(nome_pessoa)
     
