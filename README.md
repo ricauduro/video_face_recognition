@@ -78,9 +78,9 @@ There are some specific points that we should pay attention:
 ![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/5c0681ee-1662-4f37-9ea4-0f0473da6b77)
 
 
-Along with the Key, now we´ll also need the endpoint to create our faceClient
+Along with the Key, now we´ll need to define some lists to store our groups, persons, id´s and also need the endpoint to create our faceClient, 
 
-![image](https://user-images.githubusercontent.com/58055908/211227060-8001f12e-9a2b-4d1d-a5db-dbb8ae77fc76.png)
+![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/353e245a-443b-4f46-a9d0-a633f5e2708f)
 
 The ENDPOINT variable you can find in your Azure subscription, inside the face API
 
