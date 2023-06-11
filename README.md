@@ -86,7 +86,7 @@ The ENDPOINT variable you can find in your Azure subscription, inside the face A
 
 ![image](https://user-images.githubusercontent.com/58055908/211227232-50d802a6-fddf-46e0-9cc3-7dfbf98419a9.png)
 
-After set some values for the person group and for the persons, we´ll set our first function, that´s going to create the person group and will send the photos of each person so we can train our model later
+Now with these functions we´ll create the person groups, assign each person to a person group and then send the photos of each person so we can train our model later
 
 ![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/f1832469-5206-43a3-bcaa-f00045da9c52)
 
