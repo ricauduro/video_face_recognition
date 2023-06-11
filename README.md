@@ -71,7 +71,7 @@ Now I´m going to explain about face recognition and I´ll create a new file for
 
 There are some specific points that we should pay attention:
   Install the cognitive services library (pip install --upgrade azure-cognitiveservices-vision-face)
-  Create a faceClient, that we´re goint to use to create the groups, train the models and identify the faces.
+  Create a faceClient, that we´ll need to create the groups, train the models and identify the faces.
   
  Starting with the imports, there´s a few more to do
 
