@@ -3,6 +3,7 @@ import cv2
 import requests
 import time
 import json
+import glob
 from azure.cognitiveservices.vision.face import FaceClient
 from msrest.authentication import CognitiveServicesCredentials
 
@@ -76,7 +77,6 @@ def iniciar():
     cam = cv2.VideoCapture(0)
 
     while True:
-        data_insert = str(datetime.now().strftime("%Y%m%d_%H%M%S"))
         ret, frame = cam.read()
         image = cv2.imencode('.jpg', frame)[1].tobytes()
 
