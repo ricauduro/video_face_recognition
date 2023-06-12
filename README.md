@@ -116,9 +116,12 @@ This code is processing the results from the facial recognition performed by Azu
 Then, it loops through the face_ids list and calls the FaceClient's "identify" method for each id, passing in the face_ids list and the "GRUPOS" list as the arguments. The "identify" method identifies the person(s) in the image using the person group and face IDs that were provided.
 Then it iterates over the faces and results, it takes the rectangle of the face, and it uses OpenCV to draw a rectangle around the face on the frame.
 It also gets the face attributes (age, gender, emotion) and if the person is identified it prints the name of the person on the frame and adds a key value pair to the face dictionary.
-It also shows the processed frame with the rectangle and the name of the person.
+It also shows the processed frame with the rectangle and the name of the person, like this
+
+![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/49fff001-af0f-4905-8bfb-97e9ba06fbd1)
+
 
 Once I´m explain how to perform face recognition on live videos, I´ll record a video with the full code so you can see it in live action. Here´s the link
-https://youtu.be/XxkPakdOr44
+
 
 
