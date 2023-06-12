@@ -4,6 +4,7 @@ import requests
 import time
 import json
 import glob
+import sys
 from azure.cognitiveservices.vision.face import FaceClient
 from msrest.authentication import CognitiveServicesCredentials
 
@@ -67,9 +68,12 @@ def iniciar():
             PESSOAS.append(nome_pessoa)
             lista_pessoas.append(nome_pessoa)
     
-    ultimo_nome = lista_pessoas.pop()
-    nomes = ', '.join(lista_pessoas)
-    print('{0} e {1} foram adicionados ao grupo {2}'.format(nomes, ultimo_nome, GRUPOS[0]))
+    if len(lista_pessoas) == 1:
+        print('{0} foi adicionado ao grupo {1}'.format(nomes, GRUPOS[0]))
+    else:
+        ultimo_nome = lista_pessoas.pop()
+        nomes = ', '.join(lista_pessoas)
+        print('{0} e {1} foram adicionados ao grupo {2}'.format(nomes, ultimo_nome, GRUPOS[0]))
 
     list(map(lambda x: criar_pessoa(x,'familia'), PESSOAS))
     list(map(lambda x: treinar(x), GRUPOS))
