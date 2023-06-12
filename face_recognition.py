@@ -69,7 +69,7 @@ def iniciar():
             lista_pessoas.append(nome_pessoa)
     
     if len(lista_pessoas) == 1:
-        print('{0} foi adicionado ao grupo {1}'.format(nomes, GRUPOS[0]))
+        print('{0} foi adicionado ao grupo {1}'.format(PESSOAS[0], GRUPOS[0]))
     else:
         ultimo_nome = lista_pessoas.pop()
         nomes = ', '.join(lista_pessoas)
