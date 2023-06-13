@@ -379,7 +379,7 @@ It also shows the processed frame with the rectangle and the name of the person,
 ![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/49fff001-af0f-4905-8bfb-97e9ba06fbd1)
 
 
-Once I´m explain how to perform face recognition on live videos, I´ll record a video with the full code so you can see it in live action. Here´s the link https://youtu.be/6Sx00lH1mTE
+Once I´m explain how to perform face recognition on live videos, I´ve recorded a video with the full code so you can see it in live action. Here´s the link https://youtu.be/6Sx00lH1mTE
 
 
 
