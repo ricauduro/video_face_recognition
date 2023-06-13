@@ -339,27 +339,27 @@ Now focusing on the recognition part
 
 ```Python
         # Obtendo landmarks
-        n = 0
-        for face, person, id, nome in zip(faces, results, ID, PESSOAS):
+        for n, (face, person, id, nome) in enumerate(zip(faces, results, ID, PESSOAS)):
             rect = face['faceRectangle']
-            left = rect['left']
-            top = rect['top']
-            right = int(rect['width']) + int(rect['left'])
-            bottom = int(rect['height']) + int(rect['top'])
+            left, top = rect['left'], rect['top']
+            right = int(rect['width'] + left)
+            bottom = int(rect['height'] + top)
 
-            draw = cv2.rectangle(frame,(left, top), (right, bottom),(0, 255, 0), 3)
+            draw_rect = cv2.rectangle(frame,(left, top), (right, bottom),(0, 255, 0), 3)
+            
             att = face['faceAttributes']
             age = att['age']
 
             if len(person.candidates) > 0 and str(person.candidates[0].person_id) == str(id):
                 print('Person for face ID {} is identified in {}.{}'.format(person.face_id, 'Frame',person.candidates[0].person_id))
-                draw = cv2.putText(frame, f'Nome:  {nome}', (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
+                draw_text = cv2.putText(frame, f'Nome:  {nome}', (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0, 255), 1,cv2.LINE_AA)
                 faces[n]['nome'] = str(nome)
+                
             else:
-                draw = cv2.putText(frame, 'Nome: Desconhecido', (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0,  255), 1, cv2.LINE_AA)
-                faces[n]['nome'] = 'Desconhecido'
-            n += 1
-        cv2.imshow('face_rect', draw)
+                draw_text = cv2.putText(frame,'Nome: Desconhecido', (left,bottom+50),cv2.FONT_HERSHEY_TRIPLEX , 0.5,(0 ,0 ,255 ),1,cv2.LINE_AA)
+                faces[n]['nome'] ='Desconhecido'
+        
+        cv2.imshow('face_rect', draw_rect)
 ```
 
 This code is processing the results from the facial recognition performed by Azure Face API. It is creating an empty list called "face_ids" and then appends the "faceId" from each face that was detected in the frame to this list.
