@@ -111,7 +111,6 @@ def iniciar():
                 draw = cv2.putText(frame, f'Nome:  {nome}', (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
                 faces[n]['nome'] = str(nome)
             else:
-                print('caiu no else')
                 draw = cv2.putText(frame, 'Nome: Desconhecido', (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0,  255), 1, cv2.LINE_AA)
                 faces[n]['nome'] = 'Desconhecido'
             n += 1
