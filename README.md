@@ -339,7 +339,8 @@ Now focusing on the recognition part
 
 ```Python
         # Obtendo landmarks
-        for face, person in zip(faces, results):
+        n = 0
+        for face, person, id, nome in zip(faces, results, ID, PESSOAS):
             rect = face['faceRectangle']
             left = rect['left']
             top = rect['top']
@@ -350,15 +351,16 @@ Now focusing on the recognition part
             att = face['faceAttributes']
             age = att['age']
 
-            # Person recognition
-            for id, nome in zip(ID, PESSOAS):
-                if len(person.candidates) > 0 and str(person.candidates[0].person_id) == str(id):
-                    print('Person for face ID {} is identified in {}.{}'.format(person.face_id, 'Frame',person.candidates[0].person_id))
-                    draw = cv2.putText(frame, 'Nome: ' + nome, (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
-                    faces[0]['nome'] = str(nome)
-                else:
-                    draw = cv2.putText(frame, 'Nome: ' + '', (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0,  255), 1, cv2.LINE_AA)
-            cv2.imshow('face_rect', draw)
+            if len(person.candidates) > 0 and str(person.candidates[0].person_id) == str(id):
+                print('Person for face ID {} is identified in {}.{}'.format(person.face_id, 'Frame',person.candidates[0].person_id))
+                draw = cv2.putText(frame, f'Nome:  {nome}', (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
+                faces[n]['nome'] = str(nome)
+            else:
+                print('caiu no else')
+                draw = cv2.putText(frame, 'Nome: Desconhecido', (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0,  255), 1, cv2.LINE_AA)
+                faces[n]['nome'] = 'Desconhecido'
+            n += 1
+        cv2.imshow('face_rect', draw)
 ```
 
 This code is processing the results from the facial recognition performed by Azure Face API. It is creating an empty list called "face_ids" and then appends the "faceId" from each face that was detected in the frame to this list.
