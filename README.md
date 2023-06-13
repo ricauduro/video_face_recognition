@@ -9,13 +9,66 @@ Using Azure cognitive services and Python, perform face recogition / detection i
 
   Let´s start with the face detection. To detect faces in real time videos, we´re going to use OpenCV (pip install opencv-python) to access our Webcam with the code
 
-![image](https://user-images.githubusercontent.com/58055908/210120461-2d23e5bc-e5e5-421f-ab58-7ac785483d9f.png)
+```Python
+import cv2
+import requests
+import time
+import json
+
+cam = cv2.VideoCapture(0)
+
+path = "Path where you saved your json file with your key"
+
+credential = json.load(open(path))
+KEY = credential['KEY']
+
+while True:
+    ret, frame = cam.read()
+    # cv2.imshow('frame', frame)
+
+    if cv2.waitKey(1)%256 == 27:
+        break
+```
 
   With this code we´re initializating our camera, getting each frame and showing the results. You can learn more here <http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html>. The line "if cv2.waitKey(1)%256 == 27:" means -> Press esc to stop the loop.
 
   Now we´re going to transform this video into something that we can send to Azure. With CV2, we´re encoding the image into the varible image to build our POST request.
 
-![image](https://user-images.githubusercontent.com/58055908/210120885-8058e9d7-6ef1-417b-8977-818ba16f86b5.png)
+```Python
+import cv2
+import requests
+import time
+import json
+
+cam = cv2.VideoCapture(0)
+
+path = "Path where you saved your json file with your key"
+
+credential = json.load(open(path))
+KEY = credential['KEY']
+
+while True:
+    ret, frame = cam.read()
+    # cv2.imshow('frame', frame)
+
+    if cv2.waitKey(1)%256 == 27:
+        break
+
+    image = cv2.imencode('.jpg', frame)[1].tobytes()
+    
+    face_api_url = "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect"
+    headers = {'Content-Type': 'application/octet-stream', 'Ocp-Apim-Subscription-Key': KEY}
+    params = {'detectionModel': 'detection_01', 'returnFaceId': 'true', 'returnFaceRectangle': 'true', 'returnFaceAttributes': 'age, gender, emotion'}
+
+    response = requests.post(face_api_url, params=params, headers=headers, data=image)
+    
+    response.raise_for_status()
+    faces = response.json()
+    print(faces)
+
+cam.release()
+cv2.destroyAllWindows()
+```
 
 The KEY variable you can find in your Azure subscription, inside the face API
 
@@ -27,7 +80,12 @@ The KEY variable you can find in your Azure subscription, inside the face API
 
   and then I´m using json.load to get the value
   
-  ![image](https://user-images.githubusercontent.com/58055908/210180066-562dd97a-04b6-40d0-afbb-c02607e1206f.png)
+```Python
+path = "Path where you saved your json file with your key"
+
+credential = json.load(open(path))
+KEY = credential['KEY']
+```
 
 
   This request was built based on the documentation mentioned earlier. I´m using detection model 01 because it returns main face attributes (head pose, age, emotion, and so on) and also returns the face landmarks that I choose. In this case, I´m only retrieving age, gender and emotion, but there are a lot of options in the documentation that you can choose.
@@ -42,7 +100,41 @@ The KEY variable you can find in your Azure subscription, inside the face API
   
   First, we´re going to comment the cv.imshow, once we want to see the video with the rectangle, not the original one. Then we can create a loop for faces variable, once we can have more than 1 face per video, and then start to set variables with the coordinates we´re receiving in the response. After we´re using cv2.rectangle method to draw the rectangle and then cv2.imshow to display the results. 
   
-![image](https://user-images.githubusercontent.com/58055908/211223914-05528f1b-82b9-4e18-9e0c-cc21238e92d2.png)
+```Python
+while True:
+    ret, frame = cam.read()
+    # cv2.imshow('frame', frame)
+
+    if cv2.waitKey(1)%256 == 27:
+        break
+
+    image = cv2.imencode('.jpg', frame)[1].tobytes()
+    
+    face_api_url = "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect"
+    headers = {'Content-Type': 'application/octet-stream', 'Ocp-Apim-Subscription-Key': KEY}
+    params = {'detectionModel': 'detection_01', 'returnFaceId': 'true', 'returnFaceRectangle': 'true', 'returnFaceAttributes': 'age, gender, emotion'}
+
+    response = requests.post(face_api_url, params=params, headers=headers, data=image)
+    
+    response.raise_for_status()
+    faces = response.json()
+    print(faces)
+
+    for face in faces:
+        rect = face['faceRectangle']
+        left = rect['left']
+        top = rect['top']
+        right = int(rect['width']) + int(rect['left'])
+        bottom = int(rect['height']) + int(rect['top'])
+
+        draw = cv2.rectangle(frame,(left, top), (right, bottom),(0, 255, 0), 3)
+       
+    cv2.imshow('face_rect', draw)
+    time.sleep(3)
+
+cam.release()
+cv2.destroyAllWindows()
+```
   
 The result is something similar to this
 
@@ -54,7 +146,12 @@ I´m also using a library (time) to create a delay between the requests. As I sa
 
 We can also draw the other attributes of our response, let´s get the age. Now we´re using the putText function from CV2 to insert a text in our image, you can find more about cv2.putText here (https://docs.opencv.org/4.x/d6/d6e/group__imgproc__draw.html#ga5126f47f883d730f633d74f07456c576) 
 
-![image](https://user-images.githubusercontent.com/58055908/211224132-5e2c807f-0102-4459-9fe9-3c177d8f26bb.png)
+```Python
+att = face['faceAttributes']
+age = att['age']
+
+draw = cv2.putText(draw, 'Age: ' + str(age), (left, bottom + 20), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
+ ```
 
 
 This is  the result
@@ -63,7 +160,46 @@ This is  the result
 
 Here the code with the age
 
-![image](https://user-images.githubusercontent.com/58055908/211224412-603b2b82-a907-4944-9e65-9422b9da40df.png)
+```Python
+while True:
+    ret, frame = cam.read()
+    # cv2.imshow('frame', frame)
+
+    if cv2.waitKey(1)%256 == 27:
+        break
+
+    image = cv2.imencode('.jpg', frame)[1].tobytes()
+    
+    face_api_url = "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect"
+    headers = {'Content-Type': 'application/octet-stream', 'Ocp-Apim-Subscription-Key': KEY}
+    params = {'detectionModel': 'detection_01', 'returnFaceId': 'true', 'returnFaceRectangle': 'true', 'returnFaceAttributes': 'age, gender, emotion'}
+
+    response = requests.post(face_api_url, params=params, headers=headers, data=image)
+    
+    response.raise_for_status()
+    faces = response.json()
+    print(faces)
+
+    for face in faces:
+        rect = face['faceRectangle']
+        left = rect['left']
+        top = rect['top']
+        right = int(rect['width']) + int(rect['left'])
+        bottom = int(rect['height']) + int(rect['top'])
+
+        draw = cv2.rectangle(frame,(left, top), (right, bottom),(0, 255, 0), 3)
+
+        att = face['faceAttributes']
+        age = att['age']
+
+        draw = cv2.putText(draw, 'Age: ' + str(age), (left, bottom + 20), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
+        
+    cv2.imshow('face_rect', draw)
+    time.sleep(3)
+
+cam.release()
+cv2.destroyAllWindows()
+```
 
 Until here you can find the code in the face_detection.py .
 
@@ -75,12 +211,39 @@ There are some specific points that we should pay attention:
   
  Starting with the imports, there´s a few more to do
 
-![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/5c0681ee-1662-4f37-9ea4-0f0473da6b77)
+```Python
+# Imports
+import cv2
+import requests
+import time
+import json
+import glob
+import sys
+from azure.cognitiveservices.vision.face import FaceClient
+from msrest.authentication import CognitiveServicesCredentials
+```
 
 
 Along with the Key, now we´ll need to define some lists to store our groups, persons, id´s and also need the endpoint to create our faceClient, 
 
-![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/353e245a-443b-4f46-a9d0-a633f5e2708f)
+```Python
+# Variables
+path = 'C:\\Users\\ricardo.cauduro\OneDrive - Kumulus\\Desktop\\Data\\NTB'
+
+credential = json.load(open(f'{path}\\key.json'))
+KEY = credential['KEY']
+ENDPOINT = credential['ENDPOINT']
+
+face_api_url = "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect"
+headers = {'Content-Type': 'application/octet-stream', 'Ocp-Apim-Subscription-Key': KEY}
+params = {'detectionModel': 'detection_01', 'returnFaceId': 'true', 'returnFaceRectangle': 'true', 'returnFaceAttributes': 'age, gender, emotion'}
+
+GRUPOS = []
+PESSOAS = []
+ID = []
+
+face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
+```
 
 The ENDPOINT variable you can find in your Azure subscription, inside the face API
 
@@ -88,16 +251,67 @@ The ENDPOINT variable you can find in your Azure subscription, inside the face A
 
 Now with these functions we´ll create the person groups, assign each person to a person group and then send the photos of each person so we can train our model later
 
-![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/f1832469-5206-43a3-bcaa-f00045da9c52)
+```Python
+# Functions
+def criar_grupo(grupo):
+    face_client.person_group.create(person_group_id=grupo, name=grupo)
+    print(f'Criado o grupo {grupo}')
 
+def criar_pessoa(pessoa, grupo):
+    globals()[pessoa] = face_client.person_group_person.create(grupo, pessoa)
+    print('Person ID:', globals()[pessoa].person_id)
+    ID.append(globals()[pessoa].person_id)
 
+    listaFotos = [file for file in glob.glob('*.jpg') if file.startswith(pessoa)]
+    time.sleep(1)
+    for image in listaFotos:
+        face_client.person_group_person.add_face_from_stream(
+            GRUPOS[0], globals()[pessoa].person_id, open(image, 'r+b'))
+        print(f'Incluida foto {image}')
+        time.sleep(1)
+```
 And in the treinar function we´re going to train the face recognition model with the photos of each person that we already sent
 
-![image](https://user-images.githubusercontent.com/58055908/211229397-c5e6ded7-181e-4fdc-9a27-a99d5a1faf21.png)
+```Python
+def treinar(grupo):
+    print(f'Iniciando treino de {grupo}')
+    face_client.person_group.train(grupo)
+    while (True):
+        training_status = face_client.person_group.get_training_status(grupo)
+        print("Training status de {}: {}.".format(grupo, training_status.status))
+        if (training_status.status == 'succeeded'):
+            break
+        elif (training_status.status == 'failed'):
+            face_client.person_group.delete(person_group_id=grupo)
+            sys.exit('Training the person group has failed.')
+        time.sleep(5)
+```
 
 Now starting to run our code. First we´ll set the name of the person group and os each person in this group using the input, then we´ll create the groups, the persons and train the model with the pictures saved on our local folder, and then we´ll start the camera.
 
-![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/f4701353-29c9-4e99-ba9c-4737fee2775d)
+def iniciar():
+    GRUPOS.append(input('Defina o nome do grupo -> ').lower())
+    list(map(lambda x: criar_grupo(x), GRUPOS))
+    
+    lista_pessoas = []
+    nome_pessoa = None
+    while nome_pessoa != 'fim':
+        nome_pessoa = input(f"Digite o nome da pessoa para associar ao grupo '{GRUPOS[0]}' ou digite 'fim' para terminar. -> ").lower()
+        if nome_pessoa != 'fim':
+            PESSOAS.append(nome_pessoa)
+            lista_pessoas.append(nome_pessoa)
+    
+    if len(lista_pessoas) == 1:
+        print('{0} foi adicionado ao grupo {1}'.format(PESSOAS[0], GRUPOS[0]))
+    else:
+        ultimo_nome = lista_pessoas.pop()
+        nomes = ', '.join(lista_pessoas)
+        print('{0} e {1} foram adicionados ao grupo {2}'.format(nomes, ultimo_nome, GRUPOS[0]))
+
+    list(map(lambda x: criar_pessoa(x,'familia'), PESSOAS))
+    list(map(lambda x: treinar(x), GRUPOS))
+
+    cam = cv2.VideoCapture(0)
 
 This is the result of the functions
 
@@ -105,12 +319,47 @@ This is the result of the functions
 
 Now sending the frame to the face api to make the recognition, this first part we already saw in the face detection
 
-![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/8bd98a5f-0691-4d5e-83b4-c354bfabfbc2)
+```Python
+    while True:
+        ret, frame = cam.read()
+        image = cv2.imencode('.jpg', frame)[1].tobytes()
+
+        response = requests.post(face_api_url, params=params, headers=headers, data=image)
+        response.raise_for_status()
+        faces = response.json()
+        face_ids = [face['faceId'] for face in faces]
+
+        global results
+        for face in face_ids:
+            results = face_client.face.identify(face_ids, 'familia')
+```
 
 
 Now focusing on the recognition part 
 
-![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/344ed43c-a841-4e87-a5d0-e88c11c90c80)
+```Python
+        # Obtendo landmarks
+        for face, person in zip(faces, results):
+            rect = face['faceRectangle']
+            left = rect['left']
+            top = rect['top']
+            right = int(rect['width']) + int(rect['left'])
+            bottom = int(rect['height']) + int(rect['top'])
+
+            draw = cv2.rectangle(frame,(left, top), (right, bottom),(0, 255, 0), 3)
+            att = face['faceAttributes']
+            age = att['age']
+
+            # Person recognition
+            for id, nome in zip(ID, PESSOAS):
+                if len(person.candidates) > 0 and str(person.candidates[0].person_id) == str(id):
+                    print('Person for face ID {} is identified in {}.{}'.format(person.face_id, 'Frame',person.candidates[0].person_id))
+                    draw = cv2.putText(frame, 'Nome: ' + nome, (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
+                    faces[0]['nome'] = str(nome)
+                else:
+                    draw = cv2.putText(frame, 'Nome: ' + '', (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0,  255), 1, cv2.LINE_AA)
+            cv2.imshow('face_rect', draw)
+```
 
 This code is processing the results from the facial recognition performed by Azure Face API. It is creating an empty list called "face_ids" and then appends the "faceId" from each face that was detected in the frame to this list.
 Then, it loops through the face_ids list and calls the FaceClient's "identify" method for each id, passing in the face_ids list and the "GRUPOS" list as the arguments. The "identify" method identifies the person(s) in the image using the person group and face IDs that were provided.
