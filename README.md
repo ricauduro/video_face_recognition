@@ -43,17 +43,6 @@ while True:
   Now we´re going to transform this video into something that we can send to Azure. With CV2, we´re encoding the image into the varible image to build our POST request.
 
 ```Python
-import cv2
-import requests
-import time
-import json
-
-cam = cv2.VideoCapture(0)
-
-path = "Path where you saved your json file with your key"
-
-credential = json.load(open(path))
-KEY = credential['KEY']
 
 while True:
     ret, frame = cam.read()
