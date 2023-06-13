@@ -10,6 +10,7 @@ Using Azure cognitive services and Python, perform face recogition / detection i
   
   So, let´s start.
   
+  ## video face detection
   Before begining, make sure you already provisioned the face API inside your Azure account.
 
   Most part of the logic I got from the quick start of the MS Face Recognition service <https://learn.microsoft.com/en-us/azure/cognitive-services/computer-vision/quickstarts-sdk/identity-client-library?tabs=visual-studio&pivots=programming-language-python> and for Face Detection <https://westus.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236>. This second link is not detailed as the first one, but basically we´re going to do a POST request of the image, GET the landmarks and then draw in the screen with OpenCV.
@@ -210,6 +211,7 @@ cv2.destroyAllWindows()
 
 Until here you can find the code in the face_detection.py .
 
+## video face recognition
 Now I´m going to explain about face recognition and I´ll create a new file for it (face_recognition.py).
 
 There are some specific points that we should pay attention:
