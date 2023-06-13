@@ -296,6 +296,7 @@ def treinar(grupo):
 
 Now starting to run our code. First we´ll set the name of the person group and os each person in this group using the input, then we´ll create the groups, the persons and train the model with the pictures saved on our local folder, and then we´ll start the camera.
 
+```Python
 def iniciar():
     GRUPOS.append(input('Defina o nome do grupo -> ').lower())
     list(map(lambda x: criar_grupo(x), GRUPOS))
@@ -319,6 +320,7 @@ def iniciar():
     list(map(lambda x: treinar(x), GRUPOS))
 
     cam = cv2.VideoCapture(0)
+```
 
 This is the result of the functions
 
