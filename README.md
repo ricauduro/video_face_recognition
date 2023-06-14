@@ -422,3 +422,9 @@ Then for each face we´ll append a timestamp value, the bottomSize a location, w
   # # calling a function to perform upload
   uploadToBlobStorage(f'output\mydata-{filename_date}.json',f'{folder_date}/mydata-{filename_date}.json')
 ```
+This is how the data should be in our storage
+
+![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/b84120f9-c0e0-4894-b0fa-7eb3fbd38ab3)
+
+![image](https://github.com/ricauduro/video_face_recognition/assets/58055908/3eea1219-c3c1-4d66-a8ad-dd09db8376fd)
+
