@@ -123,7 +123,7 @@ def iniciar():
             if len(person.candidates) > 0 and str(person.candidates[0].person_id) == str(id):
                 print('Person for face ID {} is identified in {}.{}'.format(person.face_id, 'Frame',person.candidates[0].person_id))
                 draw_text = cv2.putText(frame, 'Nome: {}'.format(nome), (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0, 255), 1,cv2.LINE_AA)
-                faces[n]['nome'] = str(nome)
+                faces[n]['nome'] = str(nome)  
             else:
                 draw_text = cv2.putText(frame, 'Nome: Desconhecido', (left,bottom+50),cv2.FONT_HERSHEY_TRIPLEX , 0.5,(0 ,0 ,255 ),1,cv2.LINE_AA)
                 faces[n]['nome'] ='Desconhecido'
@@ -134,11 +134,11 @@ def iniciar():
         faces = [{**face, 'timeStamp': str(datetime.now()), 'bottomSize': str(bottom), 'location': 'Casa'} for face in faces]
         json_string = json.dumps(faces, separators=(',', ':'))
 
-        with open(f'output\mydata-{filename_date}.json', 'w') as f:
+        with open('output\mydata-{}.json'.format(filename_date), 'w') as f:
             json.dump(json.JSONDecoder().decode(json_string), f)
             
         # Calling a function to perform upload
-        uploadToBlobStorage(f'output\mydata-{filename_date}.json',f'{folder_date}/mydata-{filename_date}.json')
+        uploadToBlobStorage('output\mydata-{}.json'.format(filename_date),'{}/mydata-{}.json'.format(folder_date,filename_date))
 
         k = cv2.waitKey(1) & 0xFF # bitwise AND operation to get the last 8 bits
         if k == 27:
