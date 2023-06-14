@@ -1,4 +1,3 @@
-# Imports
 import cv2
 import requests
 import time
@@ -11,7 +10,7 @@ from msrest.authentication import CognitiveServicesCredentials
 # Variables
 path = 'C:\\Users\\ricardo.cauduro\OneDrive - Kumulus\\Desktop\\Data\\NTB'
 
-credential = json.load(open(f'{path}\\key.json'))
+credential = json.load(open('{}\\key.json'.format(path)))
 KEY = credential['KEY']
 ENDPOINT = credential['ENDPOINT']
 
@@ -28,7 +27,7 @@ face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
 # Functions
 def criar_grupo(grupo):
     face_client.person_group.create(person_group_id=grupo, name=grupo)
-    print(f'Criado o grupo {grupo}')
+    print('Criado o grupo {}'.format(grupo))
 
 def criar_pessoa(pessoa, grupo):
     globals()[pessoa] = face_client.person_group_person.create(grupo, pessoa)
@@ -40,11 +39,11 @@ def criar_pessoa(pessoa, grupo):
     for image in listaFotos:
         face_client.person_group_person.add_face_from_stream(
             GRUPOS[0], globals()[pessoa].person_id, open(image, 'r+b'))
-        print(f'Incluida foto {image}')
+        print('Incluida foto {}'.format(image))
         time.sleep(1)
 
 def treinar(grupo):
-    print(f'Iniciando treino de {grupo}')
+    print('Iniciando treino de {}'.format(grupo))
     face_client.person_group.train(grupo)
     while (True):
         training_status = face_client.person_group.get_training_status(grupo)
@@ -59,23 +58,23 @@ def treinar(grupo):
 def iniciar():
     GRUPOS.append(input('Defina o nome do grupo -> ').lower())
     list(map(lambda x: criar_grupo(x), GRUPOS))
-    
+
     lista_pessoas = []
     nome_pessoa = None
     while nome_pessoa != 'fim':
-        nome_pessoa = input(f"Digite o nome da pessoa para associar ao grupo '{GRUPOS[0]}' ou digite 'fim' para terminar. -> ").lower()
+        nome_pessoa = input("Digite o nome da pessoa para associar ao grupo '{}' ou digite 'fim' para terminar. -> ".format(GRUPOS[0])).lower()
         if nome_pessoa != 'fim':
             PESSOAS.append(nome_pessoa)
             lista_pessoas.append(nome_pessoa)
-    
+
     if len(lista_pessoas) == 1:
-        print('{0} foi adicionado ao grupo {1}'.format(PESSOAS[0], GRUPOS[0]))
+        print('{} foi adicionado ao grupo {}'.format(PESSOAS[0], GRUPOS[0]))
     else:
         ultimo_nome = lista_pessoas.pop()
         nomes = ', '.join(lista_pessoas)
-        print('{0} e {1} foram adicionados ao grupo {2}'.format(nomes, ultimo_nome, GRUPOS[0]))
+        print('{} e {} foram adicionados ao grupo {}'.format(nomes, ultimo_nome, GRUPOS[0]))
 
-    list(map(lambda x: criar_pessoa(x,'familia'), PESSOAS))
+    list(map(lambda x: criar_pessoa(x,GRUPOS[0]), PESSOAS))
     list(map(lambda x: treinar(x), GRUPOS))
 
     cam = cv2.VideoCapture(0)
@@ -91,7 +90,7 @@ def iniciar():
 
         global results
         for face in face_ids:
-            results = face_client.face.identify(face_ids, 'familia')
+            results = face_client.face.identify(face_ids, GRUPOS[0])
 
         # Obtendo landmarks
         for n, (face, person, id, nome) in enumerate(zip(faces, results, ID, PESSOAS)):
@@ -101,19 +100,17 @@ def iniciar():
             bottom = int(rect['height'] + top)
 
             draw_rect = cv2.rectangle(frame,(left, top), (right, bottom),(0, 255, 0), 3)
-            
             att = face['faceAttributes']
             age = att['age']
 
             if len(person.candidates) > 0 and str(person.candidates[0].person_id) == str(id):
                 print('Person for face ID {} is identified in {}.{}'.format(person.face_id, 'Frame',person.candidates[0].person_id))
-                draw_text = cv2.putText(frame, f'Nome:  {nome}', (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0, 255), 1,cv2.LINE_AA)
+                draw_text = cv2.putText(frame, 'Nome: {}'.format(nome), (left, bottom + 50), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0, 0, 255), 1,cv2.LINE_AA)
                 faces[n]['nome'] = str(nome)
-                
             else:
-                draw_text = cv2.putText(frame,'Nome: Desconhecido', (left,bottom+50),cv2.FONT_HERSHEY_TRIPLEX , 0.5,(0 ,0 ,255 ),1,cv2.LINE_AA)
+                draw_text = cv2.putText(frame, 'Nome: Desconhecido', (left,bottom+50),cv2.FONT_HERSHEY_TRIPLEX , 0.5,(0 ,0 ,255 ),1,cv2.LINE_AA)
                 faces[n]['nome'] ='Desconhecido'
-        
+
         cv2.imshow('face_rect', draw_rect)
 
         k = cv2.waitKey(1) & 0xFF # bitwise AND operation to get the last 8 bits
@@ -121,12 +118,11 @@ def iniciar():
             print("Escape hit, closing...")
             break
 
-def fim():
+def fim(nome_do_grupo):
     cv2.destroyAllWindows()
-    face_client.person_group.delete(person_group_id='familia')
+    face_client.person_group.delete(person_group_id = nome_do_grupo)
 
 # Start the code
 iniciar()
-
 # Stop and clean
-fim()
+fim('nome_do_grupo')
