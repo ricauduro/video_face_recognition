@@ -416,11 +416,11 @@ Then for each face we´ll append a timestamp value, the bottomSize a location, w
   faces = [{**face, 'timeStamp': str(datetime.now()), 'bottomSize': str(bottom), 'location': 'Casa'} for face in faces]
   json_string = json.dumps(faces, separators=(',', ':'))
 
-  with open(f'output\mydata-{filename_date}.json', 'w') as f:
-      json.dump(json.JSONDecoder().decode(json_string), f)
-
-  # # calling a function to perform upload
-  uploadToBlobStorage(f'output\mydata-{filename_date}.json',f'{folder_date}/mydata-{filename_date}.json')
+  with open('output\mydata-{}.json'.format(filename_date), 'w') as f:
+            json.dump(json.JSONDecoder().decode(json_string), f)
+            
+  # Calling a function to perform upload
+  uploadToBlobStorage('output\mydata-{}.json'.format(filename_date),'{}/mydata-{}.json'.format(folder_date,filename_date))
 ```
 This is how the data should be in our storage
 
