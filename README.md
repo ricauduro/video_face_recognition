@@ -373,5 +373,52 @@ It also shows the processed frame with the rectangle and the name of the person,
 
 Once I´m explain how to perform face recognition on live videos, I´ve recorded a video with the full code so you can see it in live action. Here´s the link https://youtu.be/6Sx00lH1mTE
 
+## move data to blob storage
+Now I´m going to explain how we can move the data we´re creating to a blob storage. I´ll create a new file for it (face_recognition_with_blob.py).
 
+We´ll need 2 aditional imports
 
+```Python
+from azure.storage.blob import BlobServiceClient 
+from datetime import datetime
+```
+We´ll also need to add some values to our key.json to use as credentials to connect to our blob storage.
+
+```Python
+storage_account_key = credential['storage_account_key']
+storage_account_name = credential['storage_account_name']
+connection_string = credential['connection_string']
+container_name = credential['container_name']
+```
+And we´ll need another function to create the blob
+
+```Python
+def uploadToBlobStorage(file_path,file_name)
+   blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+   blob_client = blob_service_client.get_blob_client(container=container_name, blob=file_name)
+   with open(file_path,'rb') as data:
+      blob_client.upload_blob(data)
+      print('Uploaded {}.'.format(file_name))
+```
+
+Inside our code´s loop we´ll need to create two variables that we´ll use to create a folder for each day in the blob storage and another one to create the file name
+
+```Python
+    while True:
+        folder_date = datetime.now().date().strftime('%Y%m%d')
+        filename_date = datetime.now().strftime('%Y%m%d_%H%M%S')
+```
+
+Then for each face we´ll append a timestamp value, the bottomSize a location, we´ll save the file locally and then call the function to send the file to our blob
+
+```Python
+  # Gerando o arquivo com as informações captadas pelo video
+  faces = [{**face, 'timeStamp': str(datetime.now()), 'bottomSize': str(bottom), 'location': 'Casa'} for face in faces]
+  json_string = json.dumps(faces, separators=(',', ':'))
+
+  with open(f'output\mydata-{filename_date}.json', 'w') as f:
+      json.dump(json.JSONDecoder().decode(json_string), f)
+
+  # # calling a function to perform upload
+  uploadToBlobStorage(f'output\mydata-{filename_date}.json',f'{folder_date}/mydata-{filename_date}.json')
+```
